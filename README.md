@@ -53,7 +53,3 @@ from the root directory.
 ## Bugs
 
 + No known bugs at this time.
-
-## Authors
-
-Dimitrios Philliou, Steven Garcia, Shannon Anderson
