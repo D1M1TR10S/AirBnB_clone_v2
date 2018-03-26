@@ -15,7 +15,7 @@ class FileStorage:
 
     def all(self, cls=None):
         '''
-            Return the dictionary
+            Return the dictionary of all objects, or the specified class name
         '''
         if cls:
             new_dict = {}
