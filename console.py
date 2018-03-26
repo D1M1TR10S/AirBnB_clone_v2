@@ -58,37 +58,12 @@ class HBNBCommand(cmd.Cmd):
                     except ValueError:
                         val = arg[1].replace("_", " ")
                 setattr(new_instance, arg[0], val)
-        
-                
+
             new_instance.save()
             print(new_instance.id)
-            
+
         except:
             print("** class doesn't exist **")
-
-#            for arg in args:
-#                if val.isdigit():
-#                    val = int(val)
-
-#                elif "." in val:
-#                    if val.split(".")[0].isdigit() and \
-#                       val.split(".")[1].isdigit():
-#                        val = float(val)
- 
-#                elif val[0] == '\"' and val[-1] == '\"':
-#                    new_string=""
-#                    print("Is a string")
-#                    for i in range(len(val)):
-#                        if i > 0 and i < len(val) - 1:
-#                            if val[i] == "\"":
-#                                new_string += "\""
-#                            elif val[i] == "_":
-#                                new_string += " "
-#                            else:
-#                                new_string += val[i]
-#                else:
-#                    continue
-#                setattr(new_instance, key, val)
 
     def do_show(self, args):
         '''
