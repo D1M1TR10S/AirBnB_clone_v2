@@ -61,7 +61,6 @@ class HBNBCommand(cmd.Cmd):
             return
 
         try:
-            
             args = shlex.split(args)
             new_instance = eval(args[0])()
 
