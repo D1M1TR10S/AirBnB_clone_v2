@@ -3,6 +3,7 @@
     Implementing the console for the HBnB project.
 '''
 import cmd
+from sys import argv
 import json
 import shlex
 from models.engine.file_storage import FileStorage
@@ -42,18 +43,56 @@ class HBNBCommand(cmd.Cmd):
         if len(args) == 0:
             print("** class name missing **")
             return
+
         try:
             args = shlex.split(args)
             new_instance = eval(args[0])()
+            args = [arg for arg in args if "=" in arg]
+            args = [arg.split("=") for arg in args]
+            for arg in args:
+                try:
+                    val = int(arg[1])
+                except ValueError:
+                    try:
+                        val = float(arg[1])
+                    except ValueError:
+                        val = arg[1].replace("_", " ")
+                setattr(new_instance, arg[0], val)
+        
+                
             new_instance.save()
             print(new_instance.id)
-
+            
         except:
             print("** class doesn't exist **")
 
+#            for arg in args:
+#                if val.isdigit():
+#                    val = int(val)
+
+#                elif "." in val:
+#                    if val.split(".")[0].isdigit() and \
+#                       val.split(".")[1].isdigit():
+#                        val = float(val)
+ 
+#                elif val[0] == '\"' and val[-1] == '\"':
+#                    new_string=""
+#                    print("Is a string")
+#                    for i in range(len(val)):
+#                        if i > 0 and i < len(val) - 1:
+#                            if val[i] == "\"":
+#                                new_string += "\""
+#                            elif val[i] == "_":
+#                                new_string += " "
+#                            else:
+#                                new_string += val[i]
+#                else:
+#                    continue
+#                setattr(new_instance, key, val)
+
     def do_show(self, args):
         '''
-            Print the string representation of an instance baed on
+            Print the string representation of an instance based on
             the class name and id given as args.
         '''
         args = shlex.split(args)
@@ -71,7 +110,6 @@ class HBNBCommand(cmd.Cmd):
         except NameError:
             print("** class doesn't exist **")
             return
-        key = args[0] + "." + args[1]
         key = args[0] + "." + args[1]
         try:
             value = obj_dict[key]
