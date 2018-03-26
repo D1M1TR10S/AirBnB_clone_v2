@@ -35,6 +35,22 @@ class HBNBCommand(cmd.Cmd):
         '''
         return True
 
+    def parser(self, value):
+        if value[0] == '"' and value[-1] == '"':
+            return value.replace("_", " ")
+        try:
+            inte = int(value)
+        except ValueError:
+            try:
+                flo = float(value)
+            except ValueError:
+                return value.replace("_", " ")
+            else:
+                return flo
+        else:
+             return inte
+        
+
     def do_create(self, args):
         '''
             Create a new instance of class BaseModel and saves it
@@ -51,24 +67,8 @@ class HBNBCommand(cmd.Cmd):
 
             args = [arg for arg in args if "=" in arg]
             args = [arg.split("=") for arg in args]
-            numbers = {}
             for arg in args:
-                if "\"" in arg[1]:
-                    pass
-                if "." in arg[1]:
-                    val = float(arg[1])
-                else:
-                    val = int(arg[1])
-                numbers[arg[0]] = val
-                
-            for arg in args:
-                if arg[0] in numbers:
-                    setattr(new_instance, arg[0], numbers[arg[0]])
-                else:
-                    new_string = arg[1].replace("_", " ")
-                    setattr(new_instance, arg[0], new_string)
-                
-                setattr(new_instance, arg[0], val)
+                setattr(new_instance, arg[0], self.parser(arg[1]))
 
             new_instance.save()
             print(new_instance.id)
