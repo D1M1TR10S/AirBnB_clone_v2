@@ -63,5 +63,6 @@ class BaseModel:
         cp_dct['__class__'] = self.__class__.__name__
         cp_dct['updated_at'] = self.updated_at.strftime("%Y-%m-%dT%H:%M:%S.%f")
         cp_dct['created_at'] = self.created_at.strftime("%Y-%m-%dT%H:%M:%S.%f")
-
+        if '_sa_instance_state' in cp_dict.keys():
+            del cp_dict[_sa_instance_state]
         return (cp_dct)
