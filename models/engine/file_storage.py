@@ -17,6 +17,12 @@ class FileStorage:
         '''
             Return the dictionary
         '''
+        if cls:
+            new_dict = {}
+            for key, val in self.__objects.items():
+                if type(val) == cls:
+                    new_dict[key] = val
+            return new_dict
         return self.__objects
 
     def new(self, obj):
@@ -58,6 +64,6 @@ class FileStorage:
         '''
             Deletes an object from __objects if it's inside
         '''
-        key = str(obj.__class__.__name__) + "." + str(obj.id)
         if obj:
+            key = str(obj.__class__.__name__) + "." + str(obj.id)
             del FileStorage.__objects[key]
