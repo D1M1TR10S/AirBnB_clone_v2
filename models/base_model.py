@@ -66,3 +66,9 @@ class BaseModel:
         if '_sa_instance_state' in cp_dict.keys():
             del cp_dict[_sa_instance_state]
         return (cp_dct)
+
+    def delete(self):
+        '''
+             deletes current instance from storage (models.storage)
+        '''
+        models.storage.delete(self)
