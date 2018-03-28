@@ -2,13 +2,13 @@
 '''
     Implementation of the State class
 '''
-
 from models.base_model import BaseModel, Base
 import sqlalchemy
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.orm import relationship
 from sqlalchemy import Column, String
+
 
 class State(BaseModel, Base):
     '''
