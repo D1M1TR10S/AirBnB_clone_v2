@@ -14,6 +14,7 @@ from models.state import State
 from models.city import City
 from models.amenity import Amenity
 from models.review import Review
+import models
 
 class HBNBCommand(cmd.Cmd):
     '''
@@ -67,11 +68,10 @@ class HBNBCommand(cmd.Cmd):
             args = [arg.split("=") for arg in args]
             for arg in args:
                 setattr(new_instance, arg[0], self.parser(arg[1]))
-
             new_instance.save()
             print(new_instance.id)
 
-        except:
+        except NameError:
             print("** class doesn't exist **")
 
     def do_show(self, args):
@@ -135,9 +135,7 @@ class HBNBCommand(cmd.Cmd):
             based or not on the class name.
         '''
         obj_list = []
-        storage = FileStorage()
-        storage.reload()
-        objects = storage.all()
+        objects = models.storage.all()
         try:
             if len(args) != 0:
                 eval(args)

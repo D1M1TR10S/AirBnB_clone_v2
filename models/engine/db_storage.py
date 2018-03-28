@@ -8,9 +8,10 @@ from models import BaseModel
 import sqlalchemy
 from sqlalchemy import MetaData
 from sqlalchemy import create_engine
-from sqlalchemy.orm import sessionmaker
+from sqlalchemy.orm import sessionmaker, scoped_session
+from sqlalchemy.ext.declarative import declarative_base
 from sys import argv
-from os import getenv 
+from os import getenv
 
 
 class DBStorage:
@@ -38,15 +39,21 @@ class DBStorage:
             Query the database and send results to user
         '''
         dicts = {}
+        classes = []
         if cls in models.classes.values():
-            results = self.__session.query(cls).all()
+            classes.append(cls)
         if cls is None:
             for key, val in models.classes.items():
-                results = self.__session.query(val).all()
+                classes.append(val)
 
-        for obj in results:
-            key = str(obj.__class__.__name__) + "." + str(obj.id)
-            dicts[key] = obj
+        for obj in classes:
+            try:
+                results = self.__session.query(obj).all()
+                for item in results:
+                    key = str(item.__class__.__name__) + "." + str(item.id)
+                    dicts[key] = item
+            except:
+                continue
 
         return dicts
 

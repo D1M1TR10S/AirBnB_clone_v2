@@ -8,9 +8,9 @@ from sqlalchemy import Column, String, ForeignKey
 
 class City(BaseModel, Base):
     '''
-        Define the class City that inherits from BaseModel.
+        Define the class City that inherits from BaseModel and Base
     '''
     __tablename__ = "cities"
 
-    state_id = Column(String(60), ForeignKey("states.id"), nullable=False)
+    state_id = Column(String(60), ForeignKey('states.id'), nullable=False)
     name = Column(String(128), nullable=False)
