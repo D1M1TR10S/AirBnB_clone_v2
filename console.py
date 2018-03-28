@@ -15,7 +15,6 @@ from models.city import City
 from models.amenity import Amenity
 from models.review import Review
 
-
 class HBNBCommand(cmd.Cmd):
     '''
         Contains the entry point of the command interpreter.

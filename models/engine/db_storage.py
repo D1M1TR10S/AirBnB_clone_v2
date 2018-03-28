@@ -2,9 +2,11 @@
 '''
     Engine for DBStorage
 '''
-from model_state import Base, State
+from models.state import Base, State
 import models
-import sq   lalchemy
+from models import BaseModel
+import sqlalchemy
+from sqlalchemy import MetaData
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from sys import argv
@@ -27,8 +29,8 @@ class DBStorage:
                                               getenv('HBNB_MYSQL_PWD'),
                                               getenv('HBNB_MYSQL_HOST'),
                                               getenv('HBNB_MYSQL_DB'),
-                                              pool_pre_ping=True)
-        if getenv('HBNB_ENV') == "test":
+                                              pool_pre_ping=True))
+        if getenv('HBNB_ENV') == 'test':
             Base.metadata.drop_all(self.__engine)
 
     def all(self, cls=None):
@@ -54,15 +56,15 @@ class DBStorage:
         '''
         self.__session.add(obj)
 
-   def delete(self, obj=None):
-       '''
-            Delete an object from current session
-       '''
-       if obj is not None:
-           self.__session.delete(obj)
-           self.save()
+    def delete(self, obj=None):
+        '''
+             Delete an object from current session
+        '''
+        if obj is not None:
+            self.__session.delete(obj)
+            self.save()
         
-   def save(self):
+    def save(self):
         '''
             Save session of database
         '''
