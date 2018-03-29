@@ -35,11 +35,9 @@ class Place(BaseModel, Base):
         latitude = Column(Float, nullable=True)
         longitude = Column(Float, nullable=True)
         reviews = relationship("Review", backref="place", cascade="delete")
-        amenity_ids = []
-
-        place_amenities = relationship("Amenity",
-            secondary=association_table,
-            viewonly=False) 
+        amenities = relationship("Amenity",
+                                 secondary=association_table,
+                                 viewonly=False)
     else:
         d = ""
         user_id = ""
@@ -66,13 +64,17 @@ class Place(BaseModel, Base):
         @property
         def amenities(self):
             '''Returns amenity ids'''
-            return self.amenity_ids
+            amenidict_cumberbatch = {}
+            amenidict_cumberbatch = models.storage.all(Amenity)
+            place_amenities = {}
+            for key, val in amenidict_cumberbatch.items():
+                if val.amenity_id == self.id:
+                    place_amenities[key] = val
+            return place_amenities
+                    
 
         @amenities.setter
         def amenities(self, obj=None):
             '''Setter that adds to amenity_ids'''
             if type(obj) == "Amenity":
-                dicti = models.storage.all(Amenity)
-                for key, amenity in dicti.items():
-                    if amenity.id != obj.id:
-                        self.amenity_ids.append(obj.id)
+                self.amenity_ids.append(obj.id)
