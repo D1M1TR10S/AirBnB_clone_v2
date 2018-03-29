@@ -3,6 +3,7 @@
     Define the class Place.
 '''
 from models.base_model import BaseModel, Base
+import models
 import sqlalchemy
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
@@ -28,6 +29,7 @@ class Place(BaseModel, Base):
         price_by_night = Column(Integer, default=0, nullable=False)
         latitude = Column(Float, nullable=True)
         longitude = Column(Float, nullable=True)
+        reviews = relationship("Review", backref="place", cascade="delete")
         amenity_ids = []
     else:
         d = ""
@@ -41,3 +43,13 @@ class Place(BaseModel, Base):
         latitude = 0.0
         longitude = 0.0
         amenity_ids = []
+
+        @property
+        def reviews(self):
+            '''Links Place and Review classes together'''
+            obj_dict = models.storage.all(Review)
+            review_list = []
+            for key, val in obj_dict:
+                if val.place_id == self.id:
+                    review_list.append(val)
+            return review_list
