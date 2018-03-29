@@ -32,18 +32,13 @@ class BaseModel:
         self.created_at = datetime.now()
         self.updated_at = datetime.now()
         if kwargs:
-            if "created_at" in kwargs:
-                kwargs["created_at"] = datetime.strptime(kwargs["created_at"],
+            kwargs["created_at"] = datetime.strptime(kwargs["created_at"],
                                                          "%Y-%m-%dT%H:%M:%S.%f")
-            if "updated_at" in kwargs:
-                kwargs["updated_at"] = datetime.strptime(kwargs["updated_at"],
+            kwargs["updated_at"] = datetime.strptime(kwargs["updated_at"],
                                                          "%Y-%m-%dT%H:%M:%S.%f")
             for key, val in kwargs.items():
-                if key in self.__dict__:
-                    self.__dict__[key] = val
-                else:
-                    if "__class__" not in key:
-                        setattr(self, key, val)
+                if "__class__" not in key:
+                    setattr(self, key, val)
 
     def __str__(self):
         '''
