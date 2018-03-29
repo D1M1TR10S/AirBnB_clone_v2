@@ -8,6 +8,7 @@ from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.orm import relationship
 from sqlalchemy import Column, String
+from os import getenv
 
 
 class State(BaseModel, Base):
@@ -16,17 +17,20 @@ class State(BaseModel, Base):
     '''
     __tablename__ = "states"
 
-    name = Column(String(128), nullable=False)
-    cities = relationship("City", backref="state", cascade="delete")
+    if getenv('HBNB_TYPE_STORAGE') == 'db':
+        name = Column(String(128), nullable=False)
+        cities = relationship("City", backref="state", cascade="delete")
 
-    @property
-    def cities(self):
-        '''
-            Getter attribute that returns a list of cities
-        '''
-        city_list = []
-        dicti = storage.all(City)
-        for key, value in dicti:
-            if value.state_id == self.id:
-                city_list.append(value)
-        return city_list
+    else:
+        name = ""
+        @property
+        def cities(self):
+            '''
+                Getter attribute that returns a list of cities
+            '''
+            city_list = []
+            dicti = storage.all(City)
+            for key, value in dicti:
+                if value.state_id == self.id:
+                    city_list.append(value)
+            return city_list

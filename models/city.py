@@ -8,6 +8,7 @@ from sqlalchemy import Column, String, ForeignKey
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.orm import relationship
+from os import getenv
 
 
 class City(BaseModel, Base):
@@ -16,6 +17,11 @@ class City(BaseModel, Base):
     '''
     __tablename__ = "cities"
 
-    state_id = Column(String(60), ForeignKey('states.id'), nullable=False)
-    name = Column(String(128), nullable=False)
-    places = relationship("Place", backref="cities", cascade="delete")
+    if getenv('HBNB_TYPE_STORAGE') == 'db':
+        state_id = Column(String(60), ForeignKey('states.id'), nullable=False)
+        name = Column(String(128), nullable=False)
+        places = relationship("Place", backref="cities", cascade="delete")
+
+    else:
+        state_id = ""
+        name = ""
