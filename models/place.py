@@ -8,8 +8,13 @@ import sqlalchemy
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.orm import relationship
-from sqlalchemy import Column, String, Integer, Float, ForeignKey
+from sqlalchemy import Column, String, Integer, Float, ForeignKey, Table
 from os import getenv
+
+association_table = Table('place_amenity', Base.metadata,
+    Column('place_id', String(60), ForeignKey('places.id'), nullable=False),
+    Column('amenity_id', String(60), ForeignKey('amenities.id'), nullable=False)
+)
 
 
 class Place(BaseModel, Base):
@@ -31,6 +36,10 @@ class Place(BaseModel, Base):
         longitude = Column(Float, nullable=True)
         reviews = relationship("Review", backref="place", cascade="delete")
         amenity_ids = []
+
+        place_amenities = relationship("Amenity",
+            secondary=association_table,
+            viewonly=False) 
     else:
         d = ""
         user_id = ""
@@ -53,3 +62,17 @@ class Place(BaseModel, Base):
                 if val.place_id == self.id:
                     review_list.append(val)
             return review_list
+
+        @property
+        def amenities(self):
+            '''Returns amenity ids'''
+            return self.amenity_ids
+
+        @amenities.setter
+        def amenities(self, obj=None):
+            '''Setter that adds to amenity_ids'''
+            if type(obj) == "Amenity":
+                dicti = models.storage.all(Amenity)
+                for key, amenity in dicti.items():
+                    if amenity.id != obj.id:
+                        self.amenity_ids.append(obj.id)
