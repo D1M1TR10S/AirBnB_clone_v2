@@ -16,7 +16,7 @@ from os import getenv
 
 class DBStorage:
     '''
-        Database Storage class that connects to DB 
+        Database Storage class that connects to DB
     '''
     __engine = None
     __session = None
@@ -70,7 +70,7 @@ class DBStorage:
         if obj is not None:
             self.__session.delete(obj)
             self.save()
-        
+
     def save(self):
         '''
             Save session of database
