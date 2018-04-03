@@ -10,7 +10,7 @@ sudo service nginx start
 sudo mkdir -p /data/web_static/releases/ /data/web_static/shared/ /data/web_static/releases/test/
 
 # Creates an index file
-sudo echo "<html>\n  <head>\n  </head>\n  <body>\n    Holberton School\n  </body>\n</html>" > /data/web_static/releases/test/index.html
+sudo echo "<html>\n  <head>\n  </head>\n  <body>\n    Holberton School\n  </body>\n</html>" | sudo tee /data/web_static/releases/test/index.html
 
 # Makes '/data/web-static/current' file a symbolic link to /test/ folder
 ln -sf /data/web_static/releases/test/ /data/web_static/current
