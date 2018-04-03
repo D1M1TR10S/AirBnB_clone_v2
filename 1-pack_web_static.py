@@ -2,9 +2,9 @@
 '''
    Generates a tgz archive for web_static deployment
 '''
-from fabric.api import *
-import tarfile
+from fabric.api import local
 from time import strftime
+import os
 
 
 def do_pack():
@@ -12,10 +12,11 @@ def do_pack():
         Creates a directory and packs it with a .tgz archived  web_static folder
     '''
     dt = strftime("%Y%m%d%H%M%S")
-    archive = "web_static_{}.tgz".format(dt)
+    archive = "versions/web_static_{}.tgz".format(dt)
+    if not os.path.isdir('versions'):
+        os.makedirs('versions')
     try:
-        local("mkdir -p versions")
-        local('tar -cvfz versions/{} web_static/'.format(archive))
-        return "versions/{}".format(archive)
+        local('tar -cvfz {} web_static'.format(archive))
+        return archive
     except:
         return None
