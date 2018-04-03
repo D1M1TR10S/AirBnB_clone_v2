@@ -16,6 +16,7 @@ from models.amenity import Amenity
 from models.review import Review
 import models
 
+
 class HBNBCommand(cmd.Cmd):
     '''
         Contains the entry point of the command interpreter.
@@ -48,8 +49,7 @@ class HBNBCommand(cmd.Cmd):
             else:
                 return flo
         else:
-             return inte
-        
+            return inte
 
     def do_create(self, args):
         '''

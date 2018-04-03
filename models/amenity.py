@@ -18,8 +18,7 @@ class Amenity(BaseModel, Base):
     if getenv('HBNB_TYPE_STORAGE') == 'db':
         from models.place import association_table
         name = Column(String(128), nullable=False)
-        place_amenities = relationship("Place",
-            secondary=association_table)
+        place_amenities = relationship("Place", secondary=association_table)
 
     else:
         name = ""
