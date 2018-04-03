@@ -9,14 +9,14 @@ import os
 
 def do_pack():
     '''
-        Create a .tgz archive for web_static folder
+        Creates a directory and packs it with a .tgz archived  web_static folder
     '''
     dt = strftime("%Y%m%d%H%M%S")
     archive = "versions/web_static_{}.tgz".format(dt)
     if not os.path.isdir('versions'):
         os.makedirs('versions')
     try:
-        local('tar -cvfz {} web_static'.format(archive))
+        local('sudo tar cvfz {} web_static'.format(archive))
         return archive
     except:
         return None
