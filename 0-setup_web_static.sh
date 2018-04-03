@@ -16,10 +16,10 @@ sudo echo "<html>\n  <head>\n  </head>\n  <body>\n    Holberton School\n  </body
 ln -sf /data/web_static/releases/test/ /data/web_static/current
 
 # Sets ownership of /data/ and all subdirectories to ubuntu and vagrant
-sudo chown -R ubuntu:vagrant /data/ .[^.]*
+sudo chown -R ubuntu:ubuntu /data/
 
 # Updates Nginx config to serve content of /data/web_static/current/ to hbnb_static
-sudo sed -i "37i\ \tlocation /hbnb_static {\n\t\talias /data/web_static/current;\n\t}" /etc/nginx/sites-enabled/default
+sudo sed -i "37i\ \tlocation /hbnb_static/ {\n\t\talias /data/web_static/current/;\n\t}\n" /etc/nginx/sites-available/default
 
 # Restarts nginx to apply changes
 sudo service nginx restart
