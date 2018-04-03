@@ -13,12 +13,11 @@ def do_pack():
     '''
         Creates directory and packs web_static folder into a .tgx archive
     '''
-    directory = os.path.dirname("versions")
-    dt = strftime("%y\%m\%d\%h\%m\%s")
+    dt = strftime("%Y%m%d%H%M%S")
     archive = "web_static_{}.tgz".format(dt)
     try:
-        os.makedirs(directory)
-        tar = local("tar -cfzv {}/{} web_static".format(directory, archive))
+        local("mkdir -p versions")
+        local("tar -cfzv versions/{} web_static".format(archive))
     except:
         return None
 
@@ -26,4 +25,4 @@ def do_pack():
     size = os.stat(archive).st_size
     print('web_static packed: {} -> {}Bytes'.format(path, size))
 
-    return archive
+    return ("versions/" + archive)
