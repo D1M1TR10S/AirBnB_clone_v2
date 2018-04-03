@@ -9,7 +9,7 @@ import os
 
 def do_pack():
     '''
-        Creates a directory and packs it with a .tgz archived  web_static folder
+        Create a .tgz archive for web_static folder
     '''
     dt = strftime("%Y%m%d%H%M%S")
     archive = "versions/web_static_{}.tgz".format(dt)
