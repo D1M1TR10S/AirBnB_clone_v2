@@ -13,10 +13,9 @@ def do_pack():
     '''
     dt = strftime("%Y%m%d%H%M%S")
     archive = "versions/web_static_{}.tgz".format(dt)
-    if not os.path.isdir('versions'):
-        os.makedirs('versions')
+    local("mkdir -p versions")
     try:
-        local('sudo tar cvfz {} web_static'.format(archive))
+        local('tar -cvzf {} web_static'.format(archive))
         return archive
     except:
         return None
