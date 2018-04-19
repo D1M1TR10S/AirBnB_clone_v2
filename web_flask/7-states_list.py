@@ -14,6 +14,7 @@ app = Flask(__name__)
 def states_list():
     '''Renders an HTML page with a list of states'''
     states = models.storage.all(models.classes["State"])
+    print(states)
     return render_template('7-states_list.html', states=states)
 
 

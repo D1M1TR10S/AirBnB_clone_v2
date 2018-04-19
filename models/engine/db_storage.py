@@ -49,7 +49,7 @@ class DBStorage:
                 except:
                     continue
         else:
-            results = self.__session.query(models.classes[cls]).all()
+            results = self.__session.query(cls).all()
             for obj in results:
                 key = obj.__class__.__name__ + '.' + obj.id
                 dicts[key] = obj
