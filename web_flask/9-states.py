@@ -24,6 +24,7 @@ def states_state(input_id=''):
                            states=states, cities=cities,
                            input_id=input_id, exists=exists)
 
+
 @app.teardown_appcontext
 def storage_close(exception):
     '''Closes a session of storage'''
