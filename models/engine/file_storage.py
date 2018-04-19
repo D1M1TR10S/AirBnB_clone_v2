@@ -66,7 +66,6 @@ class FileStorage:
         '''
         self.reload()
 
-            
     def delete(self, obj=None):
         '''
             Deletes an object from __objects if it's inside

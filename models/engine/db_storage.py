@@ -55,7 +55,6 @@ class DBStorage:
                 dicts[key] = obj
         return dicts
 
-
     def new(self, obj):
         '''
             Create a new object and add it to current session
@@ -87,6 +86,6 @@ class DBStorage:
 
     def close(self):
         '''
-            Calls remove() method on the private session attribute self.__session
+            Calls remove() method on the session attribute self.__session
         '''
         self.__session.remove()
