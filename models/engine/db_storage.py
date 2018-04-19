@@ -39,23 +39,22 @@ class DBStorage:
             Query the database and send results to user
         '''
         dicts = {}
-        classes = []
-        if cls in models.classes.values():
-            classes.append(cls)
         if cls is None:
-            for key, val in models.classes.items():
-                classes.append(val)
-
-        for obj in classes:
-            try:
-                results = self.__session.query(obj).all()
-                for item in results:
-                    key = str(item.__class__.__name__) + "." + str(item.id)
-                    dicts[key] = item
-            except:
-                continue
-
+            for item in models.classes.values():
+                try:
+                    results = self.__session.query(item).all()
+                    for obj in results:
+                        key = obj.__class__.__name__ + '.' + obj.id
+                        dicts[key] = obj
+                except:
+                    continue
+        else:
+            results = self.__session.query(models.classes[cls]).all()
+            for obj in results:
+                key = obj.__class__.__name__ + '.' + obj.id
+                dicts[key] = obj
         return dicts
+
 
     def new(self, obj):
         '''
@@ -84,5 +83,10 @@ class DBStorage:
         Base.metadata.create_all(self.__engine)
         session_factory = sessionmaker(bind=self.__engine,
                                        expire_on_commit=False)
-        DB_Session = scoped_session(session_factory)
-        self.__session = DB_Session()
+        self.__session = scoped_session(session_factory)
+
+    def close(self):
+        '''
+            Calls remove() method on the private session attribute self.__session
+        '''
+        self.__session.remove()
