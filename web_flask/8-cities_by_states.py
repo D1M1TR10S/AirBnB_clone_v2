@@ -16,9 +16,8 @@ def cities_list():
     '''Renders an HTML page with a list of cities by their states'''
     cities = models.storage.all(models.classes["City"])
     states = models.storage.all(models.classes["State"])
-    print(cities)
-    print(states)
-    return render_template('8-cities_by_states.html', states=states, cities=cities)
+    return render_template('8-cities_by_states.html'
+                           states=states, cities=cities)
 
 
 @app.teardown_appcontext
