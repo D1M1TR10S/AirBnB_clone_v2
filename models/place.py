@@ -12,9 +12,10 @@ from sqlalchemy import Column, String, Integer, Float, ForeignKey, Table
 from os import getenv
 
 association_table = Table('place_amenity', Base.metadata,
-    Column('place_id', String(60), ForeignKey('places.id'), nullable=False),
-    Column('amenity_id', String(60), ForeignKey('amenities.id'), nullable=False)
-)
+                          Column('place_id', String(60),
+                                 ForeignKey('places.id'), nullable=False),
+                          Column('amenity_id', String(60),
+                                 ForeignKey('amenities.id'), nullable=False))
 
 
 class Place(BaseModel, Base):
@@ -71,7 +72,6 @@ class Place(BaseModel, Base):
                 if val.amenity_id == self.id:
                     place_amenities[key] = val
             return place_amenities
-                    
 
         @amenities.setter
         def amenities(self, obj=None):
